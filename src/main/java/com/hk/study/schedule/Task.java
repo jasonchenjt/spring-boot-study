@@ -1,6 +1,8 @@
 package com.hk.study.schedule;
 
+import com.hk.study.async.AsyncTask;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -17,26 +19,28 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@EnableScheduling
 public class Task implements SchedulingConfigurer {
+
+    @Autowired
+    private AsyncTask asyncTask;
+
+    @Scheduled(fixedRate = 1000 * 10)
+    public void task2() {
+        log.info("定频定时器 Task, threadId:" + Thread.currentThread().getId());
+        asyncTask.asyncOperation();
+    }
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         // 任务内容.拉姆达表达式
-        TriggerTask triggrtTask = new TriggerTask(
-                () -> {
+        taskRegistrar.addTriggerTask(() -> {
                     log.info("变频定时器 Task");
                 },
                 // 设置触发器，这里是一个拉姆达表达式，传入的TriggerContext类型，返回的是Date类型
                 triggerContext -> {
                     // 2.3 返回执行周期(Date)
-                    return new CronTrigger("0/2 * * * * ?").nextExecutionTime(triggerContext);
-                });
-
-        taskRegistrar.addTriggerTask(triggrtTask);
-    }
-
-    @Scheduled(fixedRate = 1000)
-    public void task2() {
-        log.info("定频定时器 Task");
+                    return new CronTrigger("0 0/2 * * * ?").nextExecutionTime(triggerContext);
+                }
+        );
     }
 }
