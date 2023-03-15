@@ -1,5 +1,7 @@
 package com.hk.study.date;
 
+import cn.hutool.core.date.CalendarUtil;
+import cn.hutool.core.date.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -87,5 +89,19 @@ public class InstantTestTest {
          */
         calendar.setFirstDayOfWeek(2);
         return calendar.get(Calendar.WEEK_OF_MONTH);
+    }
+
+    @Test
+    void name() {
+        Calendar calendar = Calendar.getInstance();
+        // 设置calendar计算一周的起始日期为星期(默认为星期日: 0-5)
+        calendar.setFirstDayOfWeek(3);
+        calendar.set(2021, 9 - 1, 1);
+//        int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+//        System.out.println(weekOfMonth);
+
+//        calendar.set(2020, 11 - 1, 1);
+        int firstDay = calendar.get(Calendar.DAY_OF_WEEK);
+        System.out.println(firstDay);
     }
 }

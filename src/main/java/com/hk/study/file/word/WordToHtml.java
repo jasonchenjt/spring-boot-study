@@ -9,6 +9,8 @@ import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.converter.WordToHtmlConverter;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.jupiter.api.Test;
+import org.mardep.vmss.entity.get.lslv.WS004LslvCertInfo;
+import org.mardep.vmss.stub.VmssStub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Base64Utils;
 import org.w3c.dom.Document;
@@ -22,6 +24,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
